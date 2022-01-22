@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: Back-End
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Mariem
+Implementation-Vendor-Id: com.iset.bp.entities
+Build-Jdk: 1.8.0_311
+Implementation-URL: https://spring.io/projects/spring-boot/Back-End
+Created-By: Maven Integration for Eclipse
+
