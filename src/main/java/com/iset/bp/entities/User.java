@@ -1,4 +1,5 @@
 package com.iset.bp.entities;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +22,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +30,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "USER")
@@ -55,13 +59,22 @@ public class User implements Serializable , UserDetails {
 	    @JoinTable(name = "users_roles",joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
 	    private Set<Role> roles = new HashSet<Role>();
 		
-			
+		@OneToMany(mappedBy="user",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+		@JsonIgnore
+		private Set<Contact> contact;
+		
+		
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	public User(Integer userId,String nom,String prenom,String email) {
+		this.userId = userId;
+		this.Nom = nom;
+		this.Prenom = prenom;
+		this.Email = email;
+	}
 	public User(Integer userId, String username, String password,String Adresse,String nom,String prenom,
 			int Cin , int Tel,String Email,String photo) {
 		super();
