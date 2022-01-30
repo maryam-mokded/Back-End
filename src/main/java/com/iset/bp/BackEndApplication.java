@@ -10,16 +10,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
+import com.iset.bp.DAO.ContactRepository;
 import com.iset.bp.DAO.RoleRepository;
 import com.iset.bp.DAO.UserRepository;
-
+import com.iset.bp.entities.Contact;
 import com.iset.bp.entities.Role;
 import com.iset.bp.entities.User;
 import com.iset.bp.service.UserService;
+import com.iset.bp.web.ContactController;
 
 @SpringBootApplication
 public class BackEndApplication implements CommandLineRunner{
+	
+	@Autowired
+	ContactRepository contactRep;
 	
 	@Autowired
 	RoleRepository roleRep;
@@ -29,6 +33,9 @@ public class BackEndApplication implements CommandLineRunner{
 	
 	@Autowired
 	UserRepository userRep;
+
+	@Autowired
+	ContactController contactCtr;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BackEndApplication.class, args);
@@ -102,6 +109,18 @@ public class BackEndApplication implements CommandLineRunner{
 		employee3.setTel(58236974);
 		userRep.save(employee3);
 		
+		
+				
+		//Ajouter des Contact 
+		Contact contact1 = new Contact(1,"Contenu de Message 1",new Date(),new User(5,"Ben Khaled","Amal","amalBenKhaled@gmail.com"));
+		contactCtr.AjouterContact(contact1);
+		Contact contact2 = new Contact(2,"Contenu de Message 2",new Date(),new User(6,"Mokded","Maryam","MaryamMokded@gmail.com"));
+		contactCtr.AjouterContact(contact2);
+		Contact contact3 = new Contact(3,"Contenu de Message 3",new Date(),new User(7,"Ben Jemaa","Hanin","HaninBEnJemaa@gmail.com"));
+		contactCtr.AjouterContact(contact3);
+		Contact contact4 = new Contact(4,"Contenu de Message 4",new Date(),new User(8,"Thamlaoui","Achref","AchrefThamlaoui@gmail.com"));
+		contactCtr.AjouterContact(contact4);
+	
 	}
 
 }
