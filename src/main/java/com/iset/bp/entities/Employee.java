@@ -1,5 +1,6 @@
 package com.iset.bp.entities;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
@@ -14,17 +15,14 @@ public class Employee extends User{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(Integer userId, String username, String password, boolean enable, Set<Role> roles, String Adresse,
-			String nom, String prenom, int Cin, int Tel, String Email, String photo) {
-		super(userId, username, password, enable, roles, Adresse, nom, prenom, Cin, Tel, Email, photo);
+	public Employee(Integer id_User, String nom, String prenom, String email, String adresse, String niveau, int cin,
+			int tel, String profession, String matricule, Date dateEmbauche, Date dateNaissance, String photo,
+			String username, String password, boolean enabled, int pilote, Set<Role> roles,
+			Set<Notification> notifications, Set<Formation> formations, Direction direction) {
+		super(id_User, nom, prenom, email, adresse, niveau, cin, tel, profession, matricule, dateEmbauche, dateNaissance, photo,
+				username, password, enabled, pilote, roles, notifications, formations, direction);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(Integer userId, String username, String password, String Adresse, String nom, String prenom,
-			int Cin, int Tel, String Email, String photo) {
-		super(userId, username, password, Adresse, nom, prenom, Cin, Tel, Email, photo);
-		// TODO Auto-generated constructor stub
-	}
-	
 	
 }

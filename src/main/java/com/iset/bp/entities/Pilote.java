@@ -3,19 +3,18 @@ package com.iset.bp.entities;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-@Entity
-@DiscriminatorValue(value="admin")
-public class Admin extends User{
 
-	public Admin() {
+@Entity
+public class Pilote extends User{
+
+	public Pilote() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Admin(Integer id_User, String nom, String prenom, String email, String adresse, String niveau, int cin,
+	public Pilote(Integer id_User, String nom, String prenom, String email, String adresse, String niveau, int cin,
 			int tel, String profession, String matricule, Date dateEmbauche, Date dateNaissance, String photo,
 			String username, String password, boolean enabled, int pilote, Set<Role> roles,
 			Set<Notification> notifications, Set<Formation> formations, Direction direction) {
@@ -23,7 +22,6 @@ public class Admin extends User{
 				username, password, enabled, pilote, roles, notifications, formations, direction);
 		// TODO Auto-generated constructor stub
 	}
-
 
 	
 }

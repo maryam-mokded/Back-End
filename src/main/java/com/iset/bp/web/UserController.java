@@ -33,119 +33,65 @@ public class UserController {
 	
 	@Autowired
 	UserService userSer;
-	
+
+
 	@GetMapping("/users")
-	public List <User> getusers(){
+	public List<User> getusers(){
 		return  userRep.findAll();
 		
 	}
 	
 	@GetMapping("/users/{id}")
-	@PreAuthorize("hasAuthority('ADMIN')")
 	public Optional<User> getUser(@PathVariable Integer id) {
 		return userRep.findById(id);
 	}
 	
+	@GetMapping("/users/pilote/{id}")
+	public User getPilote(@PathVariable int id) {
+		List<User> userList = this.getusers();
+		User pilote = new User();
+		for ( int i=0;i<=userList.size();i++) {
+			if(userList.get(i).getDirection().getId_Direction() == id ) {
+				pilote = userList.get(i);
+			}
+		}
+		return pilote;
+	}
+	
+	
 	@DeleteMapping("/users/{id}")
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public void deleteUser(@PathVariable Integer id) {
-			userRep.deleteById(id);
+	public void deleteUser(@PathVariable int id) {
+		User user = userRep.findById(id).get();
+		user.setNotifications(null);
+		user.setFormations(null);
+		user.setDirection(null);
+		userRep.deleteById(user.getId_User());
 	}
 	
 	@RequestMapping(value="/users",method = RequestMethod.POST)
-	@PreAuthorize("hasAuthority('ADMIN')")
 	public void AddUser(@RequestBody User user){
-		Optional<User> u =  userRep.findById(user.getUserId());
+		Optional<User> u =  userRep.findById(user.getId_User());
 		if (u.isPresent() == false) { 
 			userRep.save(user);
 		}else throw new RuntimeException("cet utilisateur déjà existe");
 
 	}
 	
+	
+	
 	@PutMapping("/users")
-	@PreAuthorize("hasAuthority('ADMIN')")
 	public void EditUser(@RequestBody User user){
-		User u = userRep.findById(user.getUserId()).orElseThrow(()->new ResourceNotFoundException("Cet utilisateur n'existe pas"));
-		u.setUserId(user.getUserId());
+		User u = userRep.findById(user.getId_User()).orElseThrow(()->new ResourceNotFoundException("Cet utilisateur n'existe pas"));
+		u.setId_User(user.getId_User());
 		u.setNom(user.getNom());
 		u.setPrenom(user.getPrenom());
-		u.setAdress(user.getAdress());
+		u.setAdresse(user.getAdresse());
 		u.setCin(user.getCin());
 		u.setEmail(user.getEmail());
 		u.setTel(user.getTel());
-		u.setUsername(user.getUsername());
 		u.setPhoto(user.getPhoto());
 		userRep.save(u);
-	
     }
 
-/*	@PutMapping("/users/{id}")
- 	@PreAuthorize("hasAuthority('ADMIN')")
-	public void CahnegerPassword(@PathVariable Integer id,@RequestBody ChangerPassword Changerpassword){
-		User u = userRep.findById(id).orElseThrow(()->new ResourceNotFoundException("Cet utilisateur n'existe pas"));
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(Changerpassword.getOldpassword());
-		
-		if(u.getPassword() == hashedPassword ) {
-			if(Changerpassword.getNewpassword() == Changerpassword.getConfirmedPassword() ) {
-				PasswordEncoder NewpasswordEncoder = new BCryptPasswordEncoder();
-				String NewhashedPassword = passwordEncoder.encode(Changerpassword.getNewpassword());
-				u.setPassword(NewhashedPassword);
-				userRep.save(u);
-			}else {
-				System.out.println("New Password / Confirmed Password incorrect");
-			}
-		}else{
-			System.out.println("Old Password / New Password incorrect");
-		}
-				
-	}*/
- 	
-}
-
-
-class ChangerPassword{
-	
-	 private String Oldpassword;
-	 private String Newpassword;
-	 private String confirmedPassword;
-	
-	 public ChangerPassword() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public ChangerPassword(String oldpassword, String newpassword, String confirmedPassword) {
-		super();
-		Oldpassword = oldpassword;
-		Newpassword = newpassword;
-		this.confirmedPassword = confirmedPassword;
-	}
-
-	public String getOldpassword() {
-		return Oldpassword;
-	}
-
-	public void setOldpassword(String oldpassword) {
-		Oldpassword = oldpassword;
-	}
-
-	public String getNewpassword() {
-		return Newpassword;
-	}
-
-	public void setNewpassword(String newpassword) {
-		Newpassword = newpassword;
-	}
-
-	public String getConfirmedPassword() {
-		return confirmedPassword;
-	}
-
-	public void setConfirmedPassword(String confirmedPassword) {
-		this.confirmedPassword = confirmedPassword;
-	}
-	
-	 
 	 
 }

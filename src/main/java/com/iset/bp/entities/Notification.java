@@ -6,72 +6,58 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
-public class Contact implements Serializable{
+public class Notification implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id_Contact;
+	private Integer id_Notification;
 	private String message;
 	private Date date;
-	private String email;
-	private String nom;
 	
-	public Contact() {
+
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name="id_User")
+	private User user;
+	
+	
+	public Notification() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public Contact(Integer id_Contact, String message, Date date, String nom, String email) {
+	public Notification(Integer id_Notification, String message, Date date) {
 		super();
-		this.id_Contact = id_Contact;
+		this.id_Notification = id_Notification;
 		this.message = message;
 		this.date = date;
-		this.email = email;
-		this.nom = nom;
 	}
-
-	public Integer getId_Contact() {
-		return id_Contact;
+	public Integer getId_Notification() {
+		return id_Notification;
 	}
-
-	public void setId_Contact(Integer id_Contact) {
-		this.id_Contact = id_Contact;
+	public void setId_Notification(Integer id_Notification) {
+		this.id_Notification = id_Notification;
 	}
-
 	public String getMessage() {
 		return message;
 	}
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
 	public Date getDate() {
 		return date;
 	}
-
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+	
 	
 	
 }

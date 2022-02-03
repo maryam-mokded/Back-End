@@ -74,13 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						.authorizeRequests()
 						.antMatchers("/login").permitAll()
 						.antMatchers("/logout").permitAll()
-						.antMatchers("/registre").permitAll()
-						.antMatchers("/operation").authenticated()
-						.antMatchers("/users").authenticated()
-						.antMatchers("/comptes").authenticated()
-						.antMatchers("/retrait").authenticated()
-						.antMatchers("/virement").authenticated()
-						.antMatchers("/versement").authenticated()
+						.antMatchers("/users").permitAll()
 						.anyRequest().permitAll();
 			
 			 //Ajouter sessionManagement et le filter

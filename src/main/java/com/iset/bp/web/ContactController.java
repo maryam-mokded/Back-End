@@ -1,5 +1,6 @@
 package com.iset.bp.web;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,28 +42,17 @@ public class ContactController {
 	}
 	
 	@DeleteMapping("/contacts/{id}")
-	public void SupprimerContact(@PathVariable Integer id) {
-			contactRep.deleteById(id);
+	public void SupprimerContact(@PathVariable int id) {
+		 contactRep.deleteById(id);
 	}
 	
 	@RequestMapping(value="/contacts",method = RequestMethod.POST)
 	public void AjouterContact(@RequestBody Contact contact){
 		Optional<Contact> c =  contactRep.findById(contact.getId_Contact());
 		if (c.isPresent() == false) { 
-			userRep.save(contact.getUser());
+			contact.setDate(new Date());
 			contactRep.save(contact);
 		}else throw new RuntimeException("ce Contact déjà existe");
 
 	}
-	
-	@PutMapping("/contacts")
-	public void ModifierContact(@RequestBody Contact contact){
-		Contact c = contactRep.findById(contact.getId_Contact()).orElseThrow(()->new ResourceNotFoundException("Ce contact n'existe pas"));
-		c.setId_Contact(contact.getId_Contact());
-		c.setMessage(contact.getMessage());
-		c.setDate(contact.getDate());
-		c.setUser(contact.getUser());
-		contactRep.save(c);
-    }
-
 }

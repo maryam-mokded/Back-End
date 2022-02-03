@@ -9,19 +9,15 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,38 +26,52 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "USER")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="type_user",discriminatorType=DiscriminatorType.STRING,length=15)
 public class User implements Serializable , UserDetails {
 		
 	    @Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		@Column(name= "user_id")
-		private Integer userId;
-		private String Nom;
-		private String Prenom;
-		private String Email;
-		private String Adress;
+		private Integer id_User;
+		private String nom;
+		private String prenom;
+		private String email;
+		private String adresse;
+		private String niveau;
 		private int Cin;
 		private int tel;
-		private Date DateEmbauche;
+		private String profession;
+		private String matricule;
+		private Date dateEmbauche;
+		private Date dateNaissance;
 		private String photo;
 		private String username;
 		private String password;
 		private boolean enabled;
+		private int pilote;
 
+		
 		@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	    @JoinTable(name = "users_roles",joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
 	    private Set<Role> roles = new HashSet<Role>();
 		
 		@OneToMany(mappedBy="user",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+		private Set<Notification> notifications;
+		
+		@OneToMany(mappedBy="user",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 		@JsonIgnore
-		private Set<Contact> contact;
+		private Set<Formation> formations;
+		
+		
+		@ManyToOne
+		@JoinColumn(name="id_Direction")
+		private Direction direction;
+		
+		/*@OneToMany(mappedBy="user",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+		@JsonIgnore
+		private Set<Contact> contact;*/
 		
 		
 	public User() {
@@ -69,97 +79,94 @@ public class User implements Serializable , UserDetails {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public User(Integer userId,String nom,String prenom,String email) {
-		this.userId = userId;
-		this.Nom = nom;
-		this.Prenom = prenom;
-		this.Email = email;
-	}
-	public User(Integer userId, String username, String password,String Adresse,String nom,String prenom,
-			int Cin , int Tel,String Email,String photo) {
+	
+	public User(Integer id_User, String nom, String prenom, String email, String adresse, String niveau, int cin,
+			int tel, String profession, String matricule, Date dateEmbauche, Date dateNaissance, String photo,
+			String username, String password, boolean enabled, int pilote, Set<Role> roles,
+			Set<Notification> notifications, Set<Formation> formations, Direction direction) {
 		super();
-		this.userId = userId;
-		this.Nom = nom;
-		this.Prenom = prenom;
-		this.DateEmbauche = new Date();
-		this.Adress = Adresse;
-		this.Cin = Cin;
-		this.tel = Tel;
+		this.id_User = id_User;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.adresse = adresse;
+		this.niveau = niveau;
+		this.Cin = cin;
+		this.tel = tel;
+		this.profession = profession;
+		this.matricule = matricule;
+		this.dateEmbauche = dateEmbauche;
+		this.dateNaissance = dateNaissance;
 		this.photo = photo;
-		this.Email =Email;
 		this.username = username;
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(password);
-		this.password = hashedPassword;
-		
-	}
-
-
-	public User(Integer userId, String username,String password,boolean enable,Set<Role> roles,String Adresse,String nom,String prenom,
-			int Cin , int Tel,String Email,String photo) {
-		super();
-		this.userId = userId;
-		this.Nom = nom;
-		this.Prenom = prenom;
-		this.DateEmbauche = new Date();
-		this.Adress = Adresse;
-		this.Cin = Cin;
-		this.tel = Tel;
-		this.photo = photo;
-		this.Email =Email;
-		this.username = username;
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(password);
-		this.password = hashedPassword;
-		this.enabled = enable;
+		this.password = password;
+		this.enabled = enabled;
+		this.pilote = pilote;
 		this.roles = roles;
+		this.notifications = notifications;
+		this.formations = formations;
+		this.direction = direction;
 	}
 
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
 	
 	
+	public Integer getId_User() {
+		return id_User;
+	}
+
+
+	public void setId_User(Integer id_User) {
+		this.id_User = id_User;
+	}
+
+
 	public String getNom() {
-		return Nom;
+		return nom;
 	}
 
 
 	public void setNom(String nom) {
-		Nom = nom;
+		this.nom = nom;
 	}
 
 
 	public String getPrenom() {
-		return Prenom;
+		return prenom;
 	}
 
 
 	public void setPrenom(String prenom) {
-		Prenom = prenom;
+		this.prenom = prenom;
 	}
 
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 
-	public String getAdress() {
-		return Adress;
+	public String getAdresse() {
+		return adresse;
 	}
 
 
-	public void setAdress(String adress) {
-		Adress = adress;
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+
+	public String getNiveau() {
+		return niveau;
+	}
+
+
+	public void setNiveau(String niveau) {
+		this.niveau = niveau;
 	}
 
 
@@ -183,13 +190,43 @@ public class User implements Serializable , UserDetails {
 	}
 
 
+	public String getProfession() {
+		return profession;
+	}
+
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+
+	public String getMatricule() {
+		return matricule;
+	}
+
+
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
+	}
+
+
 	public Date getDateEmbauche() {
-		return DateEmbauche;
+		return dateEmbauche;
 	}
 
 
 	public void setDateEmbauche(Date dateEmbauche) {
-		DateEmbauche = dateEmbauche;
+		this.dateEmbauche = dateEmbauche;
+	}
+
+
+	public Date getDateNaissance() {
+		return dateNaissance;
+	}
+
+
+	public void setDateNaissance(Date dateNaissance) {
+		this.dateNaissance = dateNaissance;
 	}
 
 
@@ -206,23 +243,33 @@ public class User implements Serializable , UserDetails {
 	public String getUsername() {
 		return username;
 	}
-	
+
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
+
 	public String getPassword() {
 		return password;
 	}
-	
-   public void setPassword(String password) {
-	    //PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		//String hashedPassword = passwordEncoder.encode(password);
+
+
+	public void setPassword(String password) {
 		this.password = password;
 	}
-   
-	
-	
+
+
+	public int getPilote() {
+		return pilote;
+	}
+
+
+	public void setPilote(int pilote) {
+		this.pilote = pilote;
+	}
+
+
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -231,7 +278,37 @@ public class User implements Serializable , UserDetails {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
+
+
+	public Set<Notification> getNotifications() {
+		return notifications;
+	}
+
+
+	public void setNotifications(Set<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+
+	public Set<Formation> getFormations() {
+		return formations;
+	}
+
+
+	public void setFormations(Set<Formation> formations) {
+		this.formations = formations;
+	}
+
+
+	public Direction getDirection() {
+		return direction;
+	}
+
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
