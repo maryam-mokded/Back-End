@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Formation implements Serializable{
@@ -27,6 +29,7 @@ public class Formation implements Serializable{
 	
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="id_User")
 	private User user;
 	

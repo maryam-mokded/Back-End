@@ -39,8 +39,6 @@ public class FormationController {
 		return formationRep.findById(id);
 	}
 	
-	
-	
 	@PostMapping("/formations/{id}")
 	public void AjouterFormation(@RequestBody Formation formation,@PathVariable int id){	
 	  	User u = userCtr.getUser(id).get();
@@ -48,15 +46,12 @@ public class FormationController {
 	  	formationRep.save(formation);
 	}
 		
-	
 	@DeleteMapping("/formations/{id}")
 	public void SupprimerFormation(@PathVariable int id) {	
 		  Formation formation = formationRep.findById(id).get();
 		  formation.setUser(null);
 		  formationRep.deleteById(id);
 	}
-	
-	
 	
 	@PutMapping("/formations/{id}")
 	public void ModifierFormation(@RequestBody Formation formation,@PathVariable int id){
