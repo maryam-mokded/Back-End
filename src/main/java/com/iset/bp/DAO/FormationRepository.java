@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.iset.bp.entities.Formation;
-import com.iset.bp.entities.User;
 
 public interface FormationRepository  extends JpaRepository<Formation,Integer>{
 
@@ -14,6 +13,7 @@ public interface FormationRepository  extends JpaRepository<Formation,Integer>{
 		WHERE formation.id_user = user.id_user
 			AND user.id_direction = 2*/	
 	
-	 /*@Query("select * from User u,Formation f where f.id_user = u.id_user")
-	 public List<Formation> GroupageFormation();*/
+	//@Query("SELECT f FROM Formation f JOIN User u on f.id_User = u.id_User")
+	 @Query("SELECT f FROM Formation f JOIN f.user u on f.user.id_User = u.id_User AND u.direction.id_Direction = ?1")
+	 public List<Formation> GroupageFormation(Integer code);
 }

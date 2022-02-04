@@ -29,9 +29,9 @@ public class FormationController {
 	@Autowired
 	UserController userCtr;
 
-	@GetMapping("/formations")
-	public List<Formation> AfficherFormations(){
-		return formationRep.findAll();
+	@GetMapping("/formations/direction/{id}")
+	public List<Formation> AfficherFormations(@PathVariable Integer id){
+		return formationRep.GroupageFormation(id);
 	}
 	
 	@GetMapping("/formations/{id}")

@@ -52,29 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			 http.csrf().disable()
-						/*.exceptionHandling()
-						.authenticationEntryPoint(new Http403ForbiddenEntryPoint() {
-						})
-						.and()*/
-					    //lancer le provider
-						//donner au utilisateur d'entrer le username et le password pour verifier si il a acces pour authentifier
-						/*.authenticationProvider(getProvider())
-						.formLogin()
-						.loginProcessingUrl("/login")
-						.successHandler(new AuthentificationLoginSuccessHandler())
-						.failureHandler(new SimpleUrlAuthenticationFailureHandler())
-						.and()
-						//pour fermer la session
-						.logout()
-						.logoutUrl("/logout")
-						.logoutSuccessHandler(new AuthentificationLogoutSuccessHandler())
-						.invalidateHttpSession(true)
-						.and()*/
 						//les autorisation
 						.authorizeRequests()
 						.antMatchers("/login").permitAll()
 						.antMatchers("/logout").permitAll()
-						.antMatchers("/users").permitAll()
+						.antMatchers("/contacts").permitAll()
 						.anyRequest().permitAll();
 			
 			 //Ajouter sessionManagement et le filter

@@ -61,6 +61,7 @@ public class User implements Serializable , UserDetails {
 		private Set<Notification> notifications;
 		
 		@OneToMany(mappedBy="user",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+		@JsonIgnore
 		private Set<Formation> formations;
 		
 		

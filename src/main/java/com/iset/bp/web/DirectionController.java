@@ -36,7 +36,6 @@ public class DirectionController {
 	
 	@DeleteMapping("/directions/{id}")
 	public void SupprimerDirection(@PathVariable int id) {
-		
 		directionRep.deleteById(id);
 	}
 	

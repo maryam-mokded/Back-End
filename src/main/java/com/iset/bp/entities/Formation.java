@@ -29,7 +29,6 @@ public class Formation implements Serializable{
 	
 	
 	@ManyToOne
-	@JsonIgnore
 	@JoinColumn(name="id_User")
 	private User user;
 	
