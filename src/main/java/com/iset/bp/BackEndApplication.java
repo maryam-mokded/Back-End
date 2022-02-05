@@ -13,12 +13,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.iset.bp.DAO.ContactRepository;
 import com.iset.bp.DAO.RoleRepository;
 import com.iset.bp.DAO.UserRepository;
+import com.iset.bp.entities.Admin;
+import com.iset.bp.entities.Chef_Service_Formation;
 import com.iset.bp.entities.Contact;
 import com.iset.bp.entities.Direction;
+import com.iset.bp.entities.Employee;
 import com.iset.bp.entities.Formation;
+import com.iset.bp.entities.Pilote;
 import com.iset.bp.entities.Role;
 import com.iset.bp.entities.User;
-import com.iset.bp.service.UserService;
 import com.iset.bp.web.ContactController;
 import com.iset.bp.web.DirectionController;
 import com.iset.bp.web.FormationController;
@@ -33,9 +36,6 @@ public class BackEndApplication implements CommandLineRunner{
 	RoleRepository roleRep;
 	
 	@Autowired
-	UserService userSer;
-	
-	@Autowired
 	UserRepository userRep;
 
 	@Autowired
@@ -44,10 +44,8 @@ public class BackEndApplication implements CommandLineRunner{
 	@Autowired
 	FormationController formationCtr;
 
-
 	@Autowired
-	DirectionController direcctionCtr;
-	
+	DirectionController direcctionCtr;	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BackEndApplication.class, args);
@@ -82,6 +80,8 @@ public class BackEndApplication implements CommandLineRunner{
 		Role role1 = roleRep.save(new Role("USER"));
 		Role role2 = roleRep.save(new Role("ADMIN"));
 		Role role3 = roleRep.save(new Role("EMPLOYEE"));
+		Role role4 = roleRep.save(new Role("CHEF_SERVICE_FORMATION"));
+		Role role5 = roleRep.save(new Role("PILOTE"));
 		
 		Set<Role> rolesAdmin = new HashSet<>();
 		rolesAdmin.add(role1);			
@@ -90,11 +90,22 @@ public class BackEndApplication implements CommandLineRunner{
 		Set<Role> rolesEmployee = new HashSet<>();
 		rolesEmployee.add(role1);			
 		rolesEmployee.add(role3);
+
+		Set<Role> rolesChefServiceFormation = new HashSet<>();
+		rolesChefServiceFormation.add(role1);			
+		rolesChefServiceFormation.add(role3);			
+		rolesChefServiceFormation.add(role4);
+		
+		Set<Role> rolesPilote = new HashSet<>();
+		rolesPilote.add(role1);			
+		rolesPilote.add(role3);			
+		rolesPilote.add(role5);
 		
 
 		//Ajouter un Admin 
-		User admin=userSer.saveUser("maryam", "123", "123");
-		admin.setRoles(rolesAdmin);	admin.setNom("Admin");
+		User admin = new Admin();
+		//admin.setRoles(rolesAdmin);	
+		admin.setNom("Admin");
 		admin.setPrenom("Admin");
 		admin.setAdresse("Bizerte");
 		admin.setCin(10000000);
@@ -104,57 +115,124 @@ public class BackEndApplication implements CommandLineRunner{
 		admin.setTel(52369852);
 		userRep.save(admin);
 		
+
+
+		//Ajouter un ChefServiceFormation
+		/*User ChefFormation = new Chef_Service_Formation();
+		//ChefFormation.setRoles(rolesChefServiceFormation);	
+		ChefFormation.setNom("Houcem");
+		ChefFormation.setPrenom("Admin");
+		ChefFormation.setAdresse("Bizerte");
+		ChefFormation.setCin(10000000);
+		ChefFormation.setDateEmbauche(new Date());
+		ChefFormation.setEmail("admin@gmail.com");
+		ChefFormation.setPhoto("photoAdmin");
+		ChefFormation.setTel(52369852);
+		userRep.save(ChefFormation);
+*/
 		
-		
-		//Ajouter les Employees
-		User employee1 =userSer.saveUser("employee1", "123", "123");
-		employee1.setRoles(rolesEmployee);	
-		employee1.setNom("Employee1");
-		employee1.setPrenom("Employee1");
+		//Ajouter les Employees du direction 1 
+		User employee1 = new Pilote();
+		//employee1.setRoles(rolesPilote);	
+		employee1.setNom("Malaoui");
+		employee1.setPrenom("Amal");
 		employee1.setAdresse("Tunis");
 		employee1.setCin(11111111);
 		employee1.setDateEmbauche(new Date());
 		employee1.setDateNaissance(new Date());
 		employee1.setProfession("Profession1");
 		employee1.setMatricule("1234G");
-		employee1.setEmail("Employee1@gmail.com");
+		employee1.setEmail("MaalaouiAmal@gmail.com");
 		employee1.setPhoto("photoEmployee1");
 		employee1.setTel(58236974);
 		employee1.setPilote(1);
-		employee1.setDirection(direction2);
+		employee1.setDirection(direction1);
 		userRep.save(employee1);
 		
-		User employee2 =userSer.saveUser("employee2", "123", "123");
-		employee2.setRoles(rolesEmployee);	
-		employee2.setNom("Employee2");
-		employee2.setPrenom("Employee2");
+		User employee2 = new Employee();
+		//employee2.setRoles(rolesEmployee);	
+		employee2.setNom("Mejri");
+		employee2.setPrenom("Sarrah");
+		employee2.setMatricule("12584M");
 		employee2.setAdresse("Gafsa");
 		employee2.setCin(22222222);
 		employee2.setDateEmbauche(new Date());
 		employee2.setDateNaissance(new Date());
 		employee2.setProfession("Profession2");
-		employee1.setMatricule("1234F");
-		employee2.setEmail("Employee2@gmail.com");
+		employee2.setEmail("MejriSarrh@gmail.com");
 		employee2.setPhoto("photoEmployee2");
 		employee2.setTel(25987456);
-		employee2.setDirection(direction2);
+		employee2.setDirection(direction1);
 		userRep.save(employee2);
 
-		User employee3 =userSer.saveUser("employee3", "123", "123");
-		employee3.setRoles(rolesEmployee);	
-		employee3.setNom("Employee3");
-		employee3.setPrenom("Employee3");
+		User employee3 =  new Employee();
+		//employee3.setRoles(rolesEmployee);	
+		employee3.setNom("Amri");
+		employee3.setPrenom("Mohamed");
 		employee3.setAdresse("Mahdia");
 		employee3.setCin(33333333);
 		employee3.setDateEmbauche(new Date());
 		employee3.setDateNaissance(new Date());
 		employee3.setProfession("Profession3");
 		employee3.setMatricule("1234D");
-		employee3.setEmail("Employee3@gmail.com");
+		employee3.setEmail("MohamedAmri@gmail.com");
 		employee3.setPhoto("photoEmployee3");
 		employee3.setTel(58236974);
-		employee3.setDirection(direction5);
+		employee3.setDirection(direction1);
 		userRep.save(employee3);
+
+		
+		//Ajouter les Employees du direction 2 
+		User employee4 =  new Pilote();
+		//employee4.setRoles(rolesPilote);	
+		employee4.setNom("Ben Salem");
+		employee4.setPrenom("Alma");
+		employee4.setAdresse("Tunis");
+		employee4.setCin(44444444);
+		employee4.setDateEmbauche(new Date());
+		employee4.setDateNaissance(new Date());
+		employee4.setProfession("Profession4");
+		employee4.setMatricule("1234G");
+		employee4.setEmail("BenSalemAlma@gmail.com");
+		employee4.setPhoto("photoEmployee4");
+		employee4.setTel(58236974);
+		employee4.setPilote(1);
+		employee4.setDirection(direction2);
+		userRep.save(employee4);
+		
+		User employee5 = new Employee();
+		//employee5.setRoles(rolesEmployee);	
+		employee5.setNom("Moneem");
+		employee5.setPrenom("Salim");
+		employee5.setAdresse("Gafsa");
+		employee5.setCin(22222222);
+		employee5.setDateEmbauche(new Date());
+		employee5.setDateNaissance(new Date());
+		employee5.setProfession("Profession2");
+		employee5.setMatricule("1234F");
+		employee5.setEmail("MoneemSalim@gmail.com");
+		employee5.setPhoto("photoEmployee2");
+		employee5.setTel(25987456);
+		employee5.setDirection(direction2);
+		userRep.save(employee5);
+
+		User employee6 = new Employee();
+		//employee6.setRoles(rolesEmployee);	
+		employee6.setNom("Ben Hajria");
+		employee6.setPrenom("Riham");
+		employee6.setAdresse("Mahdia");
+		employee6.setCin(33333333);
+		employee6.setDateEmbauche(new Date());
+		employee6.setDateNaissance(new Date());
+		employee6.setProfession("Profession3");
+		employee6.setMatricule("1234D");
+		employee6.setEmail("BenHajriaRihem@gmail.com");
+		employee6.setPhoto("photoEmployee3");
+		employee6.setTel(58236974);
+		employee6.setDirection(direction2);
+		userRep.save(employee6);
+	
+		
 		
 		//Ajouter Des Formation
 		Formation formation1 = new Formation(1, "theme1", "type1","objectif1");

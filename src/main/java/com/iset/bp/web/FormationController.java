@@ -1,5 +1,6 @@
 package com.iset.bp.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +30,21 @@ public class FormationController {
 	@Autowired
 	UserController userCtr;
 
+	@GetMapping("/formations/ServiceF/{id}")
+	public List<Formation> AfficherFormationsService(@PathVariable Integer id){
+		List<Formation> formations = formationRep.GroupageFormation(id);
+		List<Formation> NewFormationsList = new ArrayList<Formation>();
+		for (int i = 0; i < formations.size(); i++) {
+	        if (formations.get(i).getValidate() == 1) {
+	         	NewFormationsList.add(formations.get(i));
+	         }
+		}
+		return NewFormationsList;
+	}
+
 	@GetMapping("/formations/direction/{id}")
 	public List<Formation> AfficherFormations(@PathVariable Integer id){
+	
 		return formationRep.GroupageFormation(id);
 	}
 	
@@ -43,6 +57,7 @@ public class FormationController {
 	public void AjouterFormation(@RequestBody Formation formation,@PathVariable int id){	
 	  	User u = userCtr.getUser(id).get();
 	  	formation.setUser(u);
+	  	formation.setValidate(0);
 	  	formationRep.save(formation);
 	}
 		
@@ -50,22 +65,28 @@ public class FormationController {
 	public void SupprimerFormation(@PathVariable int id) {	
 		  Formation formation = formationRep.findById(id).get();
 		  formation.setUser(null);
-		  formationRep.deleteById(id);
+		  formationRep.deleteFormation(id);
 	}
 	
-	@PutMapping("/formations/{id}")
-	public void ModifierFormation(@RequestBody Formation formation,@PathVariable int id){
-		Formation f = formationRep.findById(id).orElseThrow(()->new ResourceNotFoundException("Cet formation n'existe pas"));
+	@PutMapping("/formations/{idF}/{idU}")
+	public void ModifierFormation(@RequestBody Formation formation,@PathVariable Integer idF,@PathVariable Integer idU){
+		Formation f = formationRep.findById(idF).orElseThrow(()->new ResourceNotFoundException("Cet formation n'existe pas"));
+		User u = userCtr.getUser(idU).get();
 		f.setId_Formation(formation.getId_Formation());
 		f.setTheme(formation.getTheme());
 		f.setType(formation.getType());
 		f.setObjectif(formation.getObjectif());
-		f.setAccept(formation.getAccept());
-		f.setHistorique(formation.getHistorique());
-		f.setUser(formation.getUser());
+		f.setValidate(formation.getValidate());
+		f.setUser(u);
 		formationRep.save(f);
     }
 	
+	@PutMapping("/formations/envoyer/{id}")
+	public void EnvoyerFormation(@PathVariable int id){
+		Formation f = formationRep.findById(id).get();
+		f.setValidate(1);
+		formationRep.save(f);
+    }
 
 }
 

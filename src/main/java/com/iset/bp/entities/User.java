@@ -9,28 +9,28 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "USER")
-public class User implements Serializable , UserDetails {
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type_user",discriminatorType=DiscriminatorType.STRING,length=15)
+public class User implements Serializable {
 		
 	    @Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,32 +58,32 @@ public class User implements Serializable , UserDetails {
 	    private Set<Role> roles = new HashSet<Role>();
 		
 		@OneToMany(mappedBy="user",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+		@JsonIgnore
 		private Set<Notification> notifications;
 		
 		@OneToMany(mappedBy="user",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 		@JsonIgnore
 		private Set<Formation> formations;
 		
+		@OneToMany(mappedBy="user",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+		@JsonIgnore
+		private Set<Historique> historiques;
+
 		
 		@ManyToOne
 		@JoinColumn(name="id_Direction")
 		private Direction direction;
-		
-		/*@OneToMany(mappedBy="user",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
-		@JsonIgnore
-		private Set<Contact> contact;*/
 		
 		
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+		
 	public User(Integer id_User, String nom, String prenom, String email, String adresse, String niveau, int cin,
 			int tel, String profession, String matricule, Date dateEmbauche, Date dateNaissance, String photo,
 			String username, String password, boolean enabled, int pilote, Set<Role> roles,
-			Set<Notification> notifications, Set<Formation> formations, Direction direction) {
+			Set<Notification> notifications, Set<Formation> formations, Set<Historique> historiques,Direction direction) {
 		super();
 		this.id_User = id_User;
 		this.nom = nom;
@@ -105,11 +105,11 @@ public class User implements Serializable , UserDetails {
 		this.roles = roles;
 		this.notifications = notifications;
 		this.formations = formations;
+		this.historiques = historiques;
 		this.direction = direction;
 	}
 
-	
-	
+
 	public Integer getId_User() {
 		return id_User;
 	}
@@ -229,6 +229,21 @@ public class User implements Serializable , UserDetails {
 		this.dateNaissance = dateNaissance;
 	}
 
+	
+
+	public Set<Historique> getHistoriques() {
+		return historiques;
+	}
+
+
+
+
+	public void setHistoriques(Set<Historique> historiques) {
+		this.historiques = historiques;
+	}
+
+
+
 
 	public String getPhoto() {
 		return photo;
@@ -315,32 +330,5 @@ public class User implements Serializable , UserDetails {
 	}
 	
 	
-	@Override
-	public boolean isAccountNonExpired() {
-		return false;
-	}
-	@Override
-	public boolean isAccountNonLocked() {
-		return false;
-	}
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return false;
-	}
-	@Override
-	public boolean isEnabled() {
-		return false;
-	}
 	
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<Role> roles = this.getRoles();           
-		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-		            
-		            for (Role role : roles) {
-		                authorities.add(new SimpleGrantedAuthority(role.getName()));
-		            }
-		            
-		            return authorities;
-	}
 }	

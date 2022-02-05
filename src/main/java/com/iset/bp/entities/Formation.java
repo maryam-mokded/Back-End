@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -23,9 +22,7 @@ public class Formation implements Serializable{
 	private String type;
 	@Column(name="objectif",length=2000)
 	private String objectif;
-	private int accept;
-	private int historique;
-	
+	private int validate;
 	
 	
 	@ManyToOne
@@ -44,25 +41,7 @@ public class Formation implements Serializable{
 		this.theme = theme;
 		this.type = type;
 		this.objectif = objectif;
-		this.historique = 0;
-	}
-
-	
-	
-	public int getAccept() {
-		return accept;
-	}
-
-	public void setAccept(int accept) {
-		this.accept = accept;
-	}
-
-	public int getHistorique() {
-		return historique;
-	}
-
-	public void setHistorique(int historique) {
-		this.historique = historique;
+		this.validate = 0;
 	}
 
 	public User getUser() {
@@ -103,6 +82,14 @@ public class Formation implements Serializable{
 
 	public void setObjectif(String objectif) {
 		this.objectif = objectif;
+	}
+
+	public int getValidate() {
+		return validate;
+	}
+
+	public void setValidate(int validate) {
+		this.validate = validate;
 	}
 	
 	

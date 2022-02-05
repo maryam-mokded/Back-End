@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iset.bp.DAO.NotificationRepository;
+import com.iset.bp.DAO.UserRepository;
+import com.iset.bp.entities.Formation;
 import com.iset.bp.entities.Notification;
+import com.iset.bp.entities.User;
 
 
 
@@ -26,10 +30,13 @@ public class NotificationController {
 	@Autowired
 	NotificationRepository notificationRep;
 	
+	@Autowired
+	UserRepository userRep;
 	
-	@GetMapping("/notifications")
-	public List<Notification> AfficherNotifications(){
-		return notificationRep.findAll();
+	
+	@GetMapping("/notifications/user/{id}")
+	public List<Notification> AfficherNotificationsUser(@PathVariable Integer id){
+		return notificationRep.GroupageNotification(id);
 	}
 	
 	@GetMapping("/notifications/{id}")
@@ -42,14 +49,15 @@ public class NotificationController {
 		 notificationRep.deleteById(id);
 	}
 	
-	@RequestMapping(value="/notifications",method = RequestMethod.POST)
-	public void AjouterNotification(@RequestBody Notification notification){
-		Optional<Notification> n =  notificationRep.findById(notification.getId_Notification());
-		if (n.isPresent() == false) { 
-			notification.setDate(new Date());
-			notificationRep.save(notification);
-		}else throw new RuntimeException("cet Notification déjà existe");
-
+	@PostMapping("/notifications/{id}")
+	public void AjouterNotification(@PathVariable int id){
+		User user = userRep.findById(id).get();
+		Notification notification = new Notification();
+		notification.setDate(new Date());
+		notification.setMessage("Cette notification de la part de chef de service formation");
+		notification.setUser(user);
+		notificationRep.save(notification);
 	}
+
 
 }
