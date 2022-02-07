@@ -12,15 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iset.bp.DAO.DirectionRepository;
 import com.iset.bp.DAO.UserRepository;
 import com.iset.bp.entities.Direction;
 import com.iset.bp.entities.Employee;
-import com.iset.bp.entities.Formation;
 import com.iset.bp.entities.User;
 
 @RestController
@@ -78,7 +74,6 @@ public class UserController {
 	  	userRep.save(user);
 	}
 		
-	
 	
 	@PutMapping("/users/{idD}/{idU}")
 	public void EditUser(@RequestBody User user,@PathVariable int idU,@PathVariable int idD){

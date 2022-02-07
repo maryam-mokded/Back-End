@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.iset.bp.DAO.ContactRepository;
 import com.iset.bp.DAO.RoleRepository;
@@ -80,7 +81,7 @@ public class BackEndApplication implements CommandLineRunner{
 		Role role1 = roleRep.save(new Role("USER"));
 		Role role2 = roleRep.save(new Role("ADMIN"));
 		Role role3 = roleRep.save(new Role("EMPLOYEE"));
-		Role role4 = roleRep.save(new Role("CHEF_SERVICE_FORMATION"));
+		Role role4 = roleRep.save(new Role("CHEF_SERVICE"));
 		Role role5 = roleRep.save(new Role("PILOTE"));
 		
 		Set<Role> rolesAdmin = new HashSet<>();
@@ -101,10 +102,14 @@ public class BackEndApplication implements CommandLineRunner{
 		rolesPilote.add(role3);			
 		rolesPilote.add(role5);
 		
+		
+		BCryptPasswordEncoder encoder; 
+		encoder = new BCryptPasswordEncoder();
+
 
 		//Ajouter un Admin 
 		User admin = new Admin();
-		//admin.setRoles(rolesAdmin);	
+		admin.setRoles(rolesAdmin);	
 		admin.setNom("Admin");
 		admin.setPrenom("Admin");
 		admin.setAdresse("Bizerte");
@@ -112,45 +117,54 @@ public class BackEndApplication implements CommandLineRunner{
 		admin.setDateEmbauche(new Date());
 		admin.setEmail("admin@gmail.com");
 		admin.setPhoto("photoAdmin");
+		admin.setUsername("admin");	
+		encoder = new BCryptPasswordEncoder();
+		admin.setPassword(encoder.encode("admin"));
 		admin.setTel(52369852);
 		userRep.save(admin);
 		
 
 
 		//Ajouter un ChefServiceFormation
-		/*User ChefFormation = new Chef_Service_Formation();
+		User ChefFormation = new Chef_Service_Formation();
 		//ChefFormation.setRoles(rolesChefServiceFormation);	
-		ChefFormation.setNom("Houcem");
-		ChefFormation.setPrenom("Admin");
+		ChefFormation.setNom("Mokded");
+		ChefFormation.setPrenom("Maryam");
 		ChefFormation.setAdresse("Bizerte");
 		ChefFormation.setCin(10000000);
 		ChefFormation.setDateEmbauche(new Date());
-		ChefFormation.setEmail("admin@gmail.com");
-		ChefFormation.setPhoto("photoAdmin");
+		ChefFormation.setEmail("MokdedMaryam@gmail.com");
+		ChefFormation.setPhoto("photoMaryam");
+		ChefFormation.setUsername("Maryam-Mokded");	
+		encoder = new BCryptPasswordEncoder();
+		ChefFormation.setPassword(encoder.encode("maryam"));
 		ChefFormation.setTel(52369852);
 		userRep.save(ChefFormation);
-*/
+
 		
 		//Ajouter les Employees du direction 1 
 		User employee1 = new Pilote();
-		//employee1.setRoles(rolesPilote);	
-		employee1.setNom("Malaoui");
-		employee1.setPrenom("Amal");
+		employee1.setRoles(rolesPilote);	
+		employee1.setNom("Guerfali");
+		employee1.setPrenom("Nour");
 		employee1.setAdresse("Tunis");
 		employee1.setCin(11111111);
 		employee1.setDateEmbauche(new Date());
 		employee1.setDateNaissance(new Date());
 		employee1.setProfession("Profession1");
 		employee1.setMatricule("1234G");
-		employee1.setEmail("MaalaouiAmal@gmail.com");
+		employee1.setEmail("GuerfaliNour@gmail.com");
 		employee1.setPhoto("photoEmployee1");
 		employee1.setTel(58236974);
 		employee1.setPilote(1);
+		employee1.setUsername("nour");	
+		encoder = new BCryptPasswordEncoder();
+		employee1.setPassword(encoder.encode("nour"));
 		employee1.setDirection(direction1);
 		userRep.save(employee1);
 		
 		User employee2 = new Employee();
-		//employee2.setRoles(rolesEmployee);	
+		employee2.setRoles(rolesEmployee);	
 		employee2.setNom("Mejri");
 		employee2.setPrenom("Sarrah");
 		employee2.setMatricule("12584M");
@@ -166,7 +180,7 @@ public class BackEndApplication implements CommandLineRunner{
 		userRep.save(employee2);
 
 		User employee3 =  new Employee();
-		//employee3.setRoles(rolesEmployee);	
+		employee3.setRoles(rolesEmployee);	
 		employee3.setNom("Amri");
 		employee3.setPrenom("Mohamed");
 		employee3.setAdresse("Mahdia");
@@ -184,24 +198,27 @@ public class BackEndApplication implements CommandLineRunner{
 		
 		//Ajouter les Employees du direction 2 
 		User employee4 =  new Pilote();
-		//employee4.setRoles(rolesPilote);	
-		employee4.setNom("Ben Salem");
-		employee4.setPrenom("Alma");
+		employee4.setRoles(rolesPilote);	
+		employee4.setNom("Ben Jemaa");
+		employee4.setPrenom("Hanin");
 		employee4.setAdresse("Tunis");
 		employee4.setCin(44444444);
 		employee4.setDateEmbauche(new Date());
 		employee4.setDateNaissance(new Date());
 		employee4.setProfession("Profession4");
 		employee4.setMatricule("1234G");
-		employee4.setEmail("BenSalemAlma@gmail.com");
+		employee4.setEmail("BenJemaaHanin@gmail.com");
 		employee4.setPhoto("photoEmployee4");
 		employee4.setTel(58236974);
+		employee4.setUsername("hanin");	
+		encoder = new BCryptPasswordEncoder();
+		employee4.setPassword(encoder.encode("hanin"));
 		employee4.setPilote(1);
 		employee4.setDirection(direction2);
 		userRep.save(employee4);
 		
 		User employee5 = new Employee();
-		//employee5.setRoles(rolesEmployee);	
+		employee5.setRoles(rolesEmployee);	
 		employee5.setNom("Moneem");
 		employee5.setPrenom("Salim");
 		employee5.setAdresse("Gafsa");
@@ -217,7 +234,7 @@ public class BackEndApplication implements CommandLineRunner{
 		userRep.save(employee5);
 
 		User employee6 = new Employee();
-		//employee6.setRoles(rolesEmployee);	
+		employee6.setRoles(rolesEmployee);	
 		employee6.setNom("Ben Hajria");
 		employee6.setPrenom("Riham");
 		employee6.setAdresse("Mahdia");

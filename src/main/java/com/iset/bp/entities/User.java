@@ -24,13 +24,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "USER")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type_user",discriminatorType=DiscriminatorType.STRING,length=15)
-public class User implements Serializable {
+public class User implements Serializable,UserDetails {
 		
 	    @Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +56,8 @@ public class User implements Serializable {
 		private String password;
 		private boolean enabled;
 		private int pilote;
-
+		private int chefService;
+		
 		
 		@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	    @JoinTable(name = "users_roles",joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -328,6 +334,39 @@ public class User implements Serializable {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+	return false;
+	}
+	
+	@Override
+	public boolean isAccountNonLocked() {
+	return false;
+	}
+	
+	@Override
+	public boolean isCredentialsNonExpired() {
+	return false;
+	}
+	
+	@Override
+	public boolean isEnabled() {
+	return false;
+	}
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<Role> roles = this.getRoles();           
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		            
+		            for (Role role : roles) {
+		                authorities.add(new SimpleGrantedAuthority(role.getName()));
+		            }
+		            
+		            return authorities;
+	}
+	
 	
 	
 	

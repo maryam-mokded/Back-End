@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 
 
 @Entity
-@DiscriminatorValue(value="Chef_Service_Formation")
+@DiscriminatorValue(value="Chef_Service")
 public class Chef_Service_Formation extends User{
 
 	public Chef_Service_Formation() {
