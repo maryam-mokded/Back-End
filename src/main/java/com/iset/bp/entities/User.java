@@ -56,7 +56,7 @@ public class User implements Serializable,UserDetails {
 		private String password;
 		private boolean enabled;
 		private int pilote;
-		private int chefService;
+		private int Chef_Service;
 		
 		
 		@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -242,13 +242,9 @@ public class User implements Serializable,UserDetails {
 	}
 
 
-
-
 	public void setHistoriques(Set<Historique> historiques) {
 		this.historiques = historiques;
-	}
-
-
+   }
 
 
 	public String getPhoto() {
@@ -331,6 +327,14 @@ public class User implements Serializable,UserDetails {
 	}
 
 
+	public int getChef_Service() {
+		return Chef_Service;
+	}
+
+	public void setChef_Service(int chef_Service) {
+		Chef_Service = chef_Service;
+	}
+
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
@@ -366,8 +370,5 @@ public class User implements Serializable,UserDetails {
 		            
 		            return authorities;
 	}
-	
-	
-	
 	
 }	

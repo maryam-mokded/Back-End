@@ -10,8 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.iset.bp.service.UserService;
 
-public class AppAuthProvider extends DaoAuthenticationProvider {
 
+
+
+public class AppAuthProvider extends DaoAuthenticationProvider {
+	
 	@Autowired
 	UserService userDetailsService;
 	

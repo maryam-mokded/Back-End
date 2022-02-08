@@ -2,15 +2,14 @@ package com.iset.bp.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 
 @Entity
@@ -19,8 +18,10 @@ public class Notification implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id_Notification;
+	@Column(name="message",length=2000)
 	private String message;
 	private Date date;
+	private int id_D;
 	
 
 	@ManyToOne
@@ -37,6 +38,13 @@ public class Notification implements Serializable{
 		this.id_Notification = id_Notification;
 		this.message = message;
 		this.date = date;
+	}
+	
+	public int getId_D() {
+		return id_D;
+	}
+	public void setId_D(int id_D) {
+		this.id_D = id_D;
 	}
 	public Integer getId_Notification() {
 		return id_Notification;

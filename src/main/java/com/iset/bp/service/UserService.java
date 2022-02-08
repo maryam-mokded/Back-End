@@ -7,11 +7,13 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.BoundConfigurationProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class UserService implements UserDetailsService {
-	
+
 	@Autowired
 	private final UserRepository userRepository;
 	@Autowired
@@ -63,7 +65,7 @@ public class UserService implements UserDetailsService {
 		 
 		 appUser.setUsername(username);
 		 Set<Role> roles = new HashSet<Role>();
-		 Role r = new Role("ROLE_USER");
+		 Role r = new Role("USER");
 		 roleRepository.save(r);
 		 roles.add(r);
 		 appUser.setRoles(roles);

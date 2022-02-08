@@ -25,6 +25,7 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 
 import com.iset.bp.service.UserService;
 
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -64,6 +65,9 @@ public AccessDeniedHandler  accessDeniedHandler() {
 		.authorizeRequests()
 		.antMatchers("/login").permitAll()
 		.antMatchers("/logout").authenticated()
+		.antMatchers("/users").authenticated()
+		.antMatchers("/directions").authenticated()
+		.antMatchers("/formations").authenticated()
 		.anyRequest().permitAll();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) ;
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager())); 

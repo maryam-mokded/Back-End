@@ -18,16 +18,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iset.bp.entities.User;
 
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-	
-	private AuthenticationManager authenticationManager;
-	
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+	 private AuthenticationManager authenticationManager;
+	 public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
 	 this.authenticationManager = authenticationManager;
 	 }
 	@Override

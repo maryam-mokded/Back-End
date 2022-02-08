@@ -12,9 +12,11 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query(" select u from User u where u.username = ?1")
 	Optional<User> findUserWithName(String username);
 	
+	@Query(" select u from User u where u.username = ?1")
+	Optional<User> findUser(String username);
 	
-    //SELECT * FROM `user` WHERE user.id_direction = 2
+	//SELECT * FROM `user` WHERE user.id_direction = 2
 	@Query("select u from User u where u.direction.id_Direction = ?1")
-	 public List<User> findByDirection(Integer code);
+	public List<User> findByDirection(Integer code);
 }
 

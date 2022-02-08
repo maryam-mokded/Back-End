@@ -31,8 +31,7 @@ public class UserController {
 	
 	@GetMapping("/users")
 	public List<User> getusers(){
-		return  userRep.findAll();
-		
+		return  userRep.findAll();	
 	}
 	
 	@GetMapping("/users/{id}")
@@ -51,6 +50,27 @@ public class UserController {
 		}
     	return null;
 	}
+	
+	@GetMapping("/users/username/{username}")
+	public Optional<User> getUserWithUserName(@PathVariable String username) {
+		return userRep.findUser(username);
+	}
+	
+
+	
+	@GetMapping("/users/chefService")
+	public User getChefServiceFormation() {
+		List<User> userList = this.getusers();
+    	User chefServiceFormation = new User();
+    	for ( int i=0; i< userList.size();i++) {
+			if(userList.get(i).getChef_Service() == 1 ) {
+				return chefServiceFormation = userList.get(i);
+			}
+		}
+    	return null;
+	}
+	
+
 	
 	@GetMapping("/users/direction/{id}")
 	public List<User> getUserDirection(@PathVariable int id) {

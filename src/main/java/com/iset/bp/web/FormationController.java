@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class FormationController {
 	UserController userCtr;
 
 	@GetMapping("/formations/ServiceF/{id}")
+	//@PreAuthorize("hasAuthority('CHEF_SERVICE')")
 	public List<Formation> AfficherFormationsService(@PathVariable Integer id){
 		List<Formation> formations = formationRep.GroupageFormation(id);
 		List<Formation> NewFormationsList = new ArrayList<Formation>();
@@ -43,17 +45,19 @@ public class FormationController {
 	}
 
 	@GetMapping("/formations/direction/{id}")
+	//@PreAuthorize("hasAuthority('PILOTE')")
 	public List<Formation> AfficherFormations(@PathVariable Integer id){
-	
 		return formationRep.GroupageFormation(id);
 	}
 	
 	@GetMapping("/formations/{id}")
+	//@PreAuthorize("hasAuthority('CHEF_SERVICE') or hasAuthority('PILOTE')")
 	public Optional<Formation> AfficherFormation(@PathVariable Integer id) {
 		return formationRep.findById(id);
 	}
 	
 	@PostMapping("/formations/{id}")
+	//@PreAuthorize("hasAuthority('PILOTE')")
 	public void AjouterFormation(@RequestBody Formation formation,@PathVariable int id){	
 	  	User u = userCtr.getUser(id).get();
 	  	formation.setUser(u);
@@ -62,6 +66,7 @@ public class FormationController {
 	}
 		
 	@DeleteMapping("/formations/{id}")
+	//@PreAuthorize("hasAuthority('CHEF_SERVICE') or hasAuthority('PILOTE')")
 	public void SupprimerFormation(@PathVariable int id) {	
 		  Formation formation = formationRep.findById(id).get();
 		  formation.setUser(null);
@@ -69,6 +74,7 @@ public class FormationController {
 	}
 	
 	@PutMapping("/formations/{idF}/{idU}")
+	//@PreAuthorize("hasAuthority('PILOTE')")
 	public void ModifierFormation(@RequestBody Formation formation,@PathVariable Integer idF,@PathVariable Integer idU){
 		Formation f = formationRep.findById(idF).orElseThrow(()->new ResourceNotFoundException("Cet formation n'existe pas"));
 		User u = userCtr.getUser(idU).get();
@@ -82,6 +88,7 @@ public class FormationController {
     }
 	
 	@PutMapping("/formations/envoyer/{id}")
+	//@PreAuthorize("hasAuthority('PILOTE')")
 	public void EnvoyerFormation(@PathVariable int id){
 		Formation f = formationRep.findById(id).get();
 		f.setValidate(1);

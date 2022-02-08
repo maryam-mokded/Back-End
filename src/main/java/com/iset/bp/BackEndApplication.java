@@ -110,6 +110,8 @@ public class BackEndApplication implements CommandLineRunner{
 		//Ajouter un Admin 
 		User admin = new Admin();
 		admin.setRoles(rolesAdmin);	
+		admin.getRoles().add(role1);
+		admin.getRoles().add(role2);		
 		admin.setNom("Admin");
 		admin.setPrenom("Admin");
 		admin.setAdresse("Bizerte");
@@ -127,11 +129,12 @@ public class BackEndApplication implements CommandLineRunner{
 
 		//Ajouter un ChefServiceFormation
 		User ChefFormation = new Chef_Service_Formation();
-		//ChefFormation.setRoles(rolesChefServiceFormation);	
+		ChefFormation.setRoles(rolesChefServiceFormation);	
 		ChefFormation.setNom("Mokded");
 		ChefFormation.setPrenom("Maryam");
 		ChefFormation.setAdresse("Bizerte");
 		ChefFormation.setCin(10000000);
+		ChefFormation.setChef_Service(1);
 		ChefFormation.setDateEmbauche(new Date());
 		ChefFormation.setEmail("MokdedMaryam@gmail.com");
 		ChefFormation.setPhoto("photoMaryam");
@@ -263,6 +266,18 @@ public class BackEndApplication implements CommandLineRunner{
 
 		Formation formation4 = new Formation(4, "theme4", "type4","objectif4");
 		formationCtr.AjouterFormation(formation4, employee2.getId_User());
+
+		Formation formation5 = new Formation(5, "theme5", "type5","objectif5");
+		formationCtr.AjouterFormation(formation5, employee5.getId_User());
+	
+		Formation formation6 = new Formation(6, "theme6", "type6","objectif6");
+		formationCtr.AjouterFormation(formation6, employee6.getId_User());
+	
+		Formation formation7 = new Formation(7, "theme7", "type7","objectif7");
+		formationCtr.AjouterFormation(formation7, employee5.getId_User());
+	
+		Formation formation8 = new Formation(8, "theme8", "type8","objectif8");
+		formationCtr.AjouterFormation(formation8, employee6.getId_User());
 	
 		
 				
