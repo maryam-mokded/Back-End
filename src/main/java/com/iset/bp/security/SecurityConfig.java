@@ -65,7 +65,7 @@ public AccessDeniedHandler  accessDeniedHandler() {
 		.authorizeRequests()
 		.antMatchers("/login").permitAll()
 		.antMatchers("/logout").authenticated()
-		.antMatchers("/users").authenticated()
+	    .antMatchers("/users").authenticated()
 		.antMatchers("/directions").authenticated()
 		.antMatchers("/formations").authenticated()
 		.anyRequest().permitAll();

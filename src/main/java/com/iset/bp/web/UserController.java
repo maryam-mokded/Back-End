@@ -111,5 +111,19 @@ public class UserController {
 		userRep.save(u);
     }
 
+	
+	@PutMapping("/users/{id}")
+	public void EditUserProfil(@RequestBody User user,@PathVariable int id){
+		User u = userRep.findById(id).orElseThrow(()->new ResourceNotFoundException("Cet utilisateur n'existe pas"));
+		u.setId_User(user.getId_User());
+		u.setNom(user.getNom());
+		u.setPrenom(user.getPrenom());
+		u.setAdresse(user.getAdresse());
+		u.setCin(user.getCin());
+		u.setEmail(user.getEmail());
+		u.setTel(user.getTel());
+		userRep.save(u);
+    }
+
 	 
 }

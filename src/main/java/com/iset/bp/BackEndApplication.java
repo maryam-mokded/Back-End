@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.iset.bp.DAO.ContactRepository;
+import com.iset.bp.DAO.FormationRepository;
 import com.iset.bp.DAO.RoleRepository;
 import com.iset.bp.DAO.UserRepository;
 import com.iset.bp.entities.Admin;
@@ -45,6 +46,9 @@ public class BackEndApplication implements CommandLineRunner{
 	@Autowired
 	FormationController formationCtr;
 
+	@Autowired
+	FormationRepository formationRep;
+	
 	@Autowired
 	DirectionController direcctionCtr;	
 	
@@ -255,29 +259,31 @@ public class BackEndApplication implements CommandLineRunner{
 		
 		
 		//Ajouter Des Formation
-		Formation formation1 = new Formation(1, "theme1", "type1","objectif1");
+		Formation formation1 = new Formation(1, "theme1", "Formation à caractère d'information et de sensibilisation","objectif1");
 		formationCtr.AjouterFormation(formation1, employee1.getId_User());
 		
-		Formation formation2 = new Formation(2, "theme2", "type2","objectif2");
+		Formation formation2 = new Formation(2, "theme2", "Formation sur les applications informatiques","objectif2");
 		formationCtr.AjouterFormation(formation2, employee2.getId_User());
 				
-		Formation formation3 = new Formation(3, "theme3", "type3","objectif3");
+		Formation formation3 = new Formation(3, "theme3", "Formation a contenu professionnel théorique","objectif3");
 		formationCtr.AjouterFormation(formation3, employee3.getId_User());
 
-		Formation formation4 = new Formation(4, "theme4", "type4","objectif4");
+		Formation formation4 = new Formation(4, "theme4", "Formation à caractère d'information et de sensibilisation","objectif4");
 		formationCtr.AjouterFormation(formation4, employee2.getId_User());
 
-		Formation formation5 = new Formation(5, "theme5", "type5","objectif5");
+		Formation formation5 = new Formation(5, "theme5", "Formation a contenu professionnel pratique","objectif5");
 		formationCtr.AjouterFormation(formation5, employee5.getId_User());
 	
-		Formation formation6 = new Formation(6, "theme6", "type6","objectif6");
+		Formation formation6 = new Formation(6, "theme6", "Formation dans les nouvelles technologies","objectif6");
 		formationCtr.AjouterFormation(formation6, employee6.getId_User());
 	
-		Formation formation7 = new Formation(7, "theme7", "type7","objectif7");
+		Formation formation7 = new Formation(7, "theme7", "Formation a contenu professionnel théorique","objectif7");
 		formationCtr.AjouterFormation(formation7, employee5.getId_User());
 	
-		Formation formation8 = new Formation(8, "theme8", "type8","objectif8");
-		formationCtr.AjouterFormation(formation8, employee6.getId_User());
+		Formation formation8 = new Formation(8, "theme8", "Formation à caractère d'information et de sensibilisation","objectif8");
+		formation8.setUser(employee6);
+		formationRep.save(formation8);
+		//formationCtr.AjouterFormation(formation8, employee6.getId_User());
 	
 		
 				
