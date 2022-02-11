@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iset.bp.DAO.UserRepository;
+import com.iset.bp.entities.Admin;
+import com.iset.bp.entities.Chef_Service_Formation;
 import com.iset.bp.entities.Direction;
 import com.iset.bp.entities.Employee;
+import com.iset.bp.entities.Pilote;
 import com.iset.bp.entities.User;
 
 @RestController
@@ -31,7 +34,14 @@ public class UserController {
 	
 	@GetMapping("/users")
 	public List<User> getusers(){
-		return  userRep.findAll();	
+		List<User> ListUser = userRep.findAll();
+		for ( int i=0; i< ListUser.size();i++) {
+			if( (ListUser.get(i) instanceof Chef_Service_Formation) || 
+				(ListUser.get(i) instanceof Pilote)||
+				(ListUser.get(i) instanceof Chef_Service_Formation))	{
+			}
+		}
+		return ListUser;
 	}
 	
 	@GetMapping("/users/{id}")

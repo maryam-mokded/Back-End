@@ -116,16 +116,17 @@ public class BackEndApplication implements CommandLineRunner{
 		admin.setRoles(rolesAdmin);	
 		admin.getRoles().add(role1);
 		admin.getRoles().add(role2);		
-		admin.setNom("Admin");
-		admin.setPrenom("Admin");
+		admin.setNom("Mokded");
+		admin.setPrenom("Marayam");
 		admin.setAdresse("Bizerte");
 		admin.setCin(10000000);
 		admin.setDateEmbauche(new Date());
-		admin.setEmail("admin@gmail.com");
-		admin.setPhoto("photoAdmin");
-		admin.setUsername("admin");	
+		admin.setEmail("MaryamMokded@gmail.com");
+		admin.setMatricule("1236M");
+		admin.setProfession("Admin");
+		admin.setUsername("Maryam-Mokded");	
 		encoder = new BCryptPasswordEncoder();
-		admin.setPassword(encoder.encode("admin"));
+		admin.setPassword(encoder.encode("maryam"));
 		admin.setTel(52369852);
 		userRep.save(admin);
 		
@@ -134,17 +135,18 @@ public class BackEndApplication implements CommandLineRunner{
 		//Ajouter un ChefServiceFormation
 		User ChefFormation = new Chef_Service_Formation();
 		ChefFormation.setRoles(rolesChefServiceFormation);	
-		ChefFormation.setNom("Mokded");
-		ChefFormation.setPrenom("Maryam");
+		ChefFormation.setNom("Thamlaoui");
+		ChefFormation.setPrenom("Achref");
 		ChefFormation.setAdresse("Bizerte");
 		ChefFormation.setCin(10000000);
 		ChefFormation.setChef_Service(1);
 		ChefFormation.setDateEmbauche(new Date());
-		ChefFormation.setEmail("MokdedMaryam@gmail.com");
-		ChefFormation.setPhoto("photoMaryam");
-		ChefFormation.setUsername("Maryam-Mokded");	
+		ChefFormation.setEmail("AchrefThamlaoui@gmail.com");
+		ChefFormation.setMatricule("1598K");
+		ChefFormation.setProfession("Chef Service Formation");
+		ChefFormation.setUsername("Achref-Thamlaoui");	
 		encoder = new BCryptPasswordEncoder();
-		ChefFormation.setPassword(encoder.encode("maryam"));
+		ChefFormation.setPassword(encoder.encode("achref"));
 		ChefFormation.setTel(52369852);
 		userRep.save(ChefFormation);
 
@@ -158,51 +160,18 @@ public class BackEndApplication implements CommandLineRunner{
 		employee1.setCin(11111111);
 		employee1.setDateEmbauche(new Date());
 		employee1.setDateNaissance(new Date());
-		employee1.setProfession("Profession1");
+		employee1.setProfession("Pilote Direction Maintenance");
 		employee1.setMatricule("1234G");
 		employee1.setEmail("GuerfaliNour@gmail.com");
 		employee1.setPhoto("photoEmployee1");
 		employee1.setTel(58236974);
 		employee1.setPilote(1);
-		employee1.setUsername("nour");	
+		employee1.setUsername("Nour-Guerfali");	
 		encoder = new BCryptPasswordEncoder();
 		employee1.setPassword(encoder.encode("nour"));
 		employee1.setDirection(direction1);
 		userRep.save(employee1);
-		
-		User employee2 = new Employee();
-		employee2.setRoles(rolesEmployee);	
-		employee2.setNom("Mejri");
-		employee2.setPrenom("Sarrah");
-		employee2.setMatricule("12584M");
-		employee2.setAdresse("Gafsa");
-		employee2.setCin(22222222);
-		employee2.setDateEmbauche(new Date());
-		employee2.setDateNaissance(new Date());
-		employee2.setProfession("Profession2");
-		employee2.setEmail("MejriSarrh@gmail.com");
-		employee2.setPhoto("photoEmployee2");
-		employee2.setTel(25987456);
-		employee2.setDirection(direction1);
-		userRep.save(employee2);
-
-		User employee3 =  new Employee();
-		employee3.setRoles(rolesEmployee);	
-		employee3.setNom("Amri");
-		employee3.setPrenom("Mohamed");
-		employee3.setAdresse("Mahdia");
-		employee3.setCin(33333333);
-		employee3.setDateEmbauche(new Date());
-		employee3.setDateNaissance(new Date());
-		employee3.setProfession("Profession3");
-		employee3.setMatricule("1234D");
-		employee3.setEmail("MohamedAmri@gmail.com");
-		employee3.setPhoto("photoEmployee3");
-		employee3.setTel(58236974);
-		employee3.setDirection(direction1);
-		userRep.save(employee3);
-
-		
+				
 		//Ajouter les Employees du direction 2 
 		User employee4 =  new Pilote();
 		employee4.setRoles(rolesPilote);	
@@ -212,81 +181,17 @@ public class BackEndApplication implements CommandLineRunner{
 		employee4.setCin(44444444);
 		employee4.setDateEmbauche(new Date());
 		employee4.setDateNaissance(new Date());
-		employee4.setProfession("Profession4");
+		employee4.setProfession("Pilote Direction Production");
 		employee4.setMatricule("1234G");
 		employee4.setEmail("BenJemaaHanin@gmail.com");
-		employee4.setPhoto("photoEmployee4");
 		employee4.setTel(58236974);
-		employee4.setUsername("hanin");	
+		employee4.setUsername("Hanin-Ben-Jemaa");	
 		encoder = new BCryptPasswordEncoder();
 		employee4.setPassword(encoder.encode("hanin"));
 		employee4.setPilote(1);
 		employee4.setDirection(direction2);
 		userRep.save(employee4);
 		
-		User employee5 = new Employee();
-		employee5.setRoles(rolesEmployee);	
-		employee5.setNom("Moneem");
-		employee5.setPrenom("Salim");
-		employee5.setAdresse("Gafsa");
-		employee5.setCin(22222222);
-		employee5.setDateEmbauche(new Date());
-		employee5.setDateNaissance(new Date());
-		employee5.setProfession("Profession2");
-		employee5.setMatricule("1234F");
-		employee5.setEmail("MoneemSalim@gmail.com");
-		employee5.setPhoto("photoEmployee2");
-		employee5.setTel(25987456);
-		employee5.setDirection(direction2);
-		userRep.save(employee5);
-
-		User employee6 = new Employee();
-		employee6.setRoles(rolesEmployee);	
-		employee6.setNom("Ben Hajria");
-		employee6.setPrenom("Riham");
-		employee6.setAdresse("Mahdia");
-		employee6.setCin(33333333);
-		employee6.setDateEmbauche(new Date());
-		employee6.setDateNaissance(new Date());
-		employee6.setProfession("Profession3");
-		employee6.setMatricule("1234D");
-		employee6.setEmail("BenHajriaRihem@gmail.com");
-		employee6.setPhoto("photoEmployee3");
-		employee6.setTel(58236974);
-		employee6.setDirection(direction2);
-		userRep.save(employee6);
-	
-		
-		
-		//Ajouter Des Formation
-		Formation formation1 = new Formation(1, "theme1", "Formation à caractère d'information et de sensibilisation","objectif1");
-		formationCtr.AjouterFormation(formation1, employee1.getId_User());
-		
-		Formation formation2 = new Formation(2, "theme2", "Formation sur les applications informatiques","objectif2");
-		formationCtr.AjouterFormation(formation2, employee2.getId_User());
-				
-		Formation formation3 = new Formation(3, "theme3", "Formation a contenu professionnel théorique","objectif3");
-		formationCtr.AjouterFormation(formation3, employee3.getId_User());
-
-		Formation formation4 = new Formation(4, "theme4", "Formation à caractère d'information et de sensibilisation","objectif4");
-		formationCtr.AjouterFormation(formation4, employee2.getId_User());
-
-		Formation formation5 = new Formation(5, "theme5", "Formation a contenu professionnel pratique","objectif5");
-		formationCtr.AjouterFormation(formation5, employee5.getId_User());
-	
-		Formation formation6 = new Formation(6, "theme6", "Formation dans les nouvelles technologies","objectif6");
-		formationCtr.AjouterFormation(formation6, employee6.getId_User());
-	
-		Formation formation7 = new Formation(7, "theme7", "Formation a contenu professionnel théorique","objectif7");
-		formationCtr.AjouterFormation(formation7, employee5.getId_User());
-	
-		Formation formation8 = new Formation(8, "theme8", "Formation à caractère d'information et de sensibilisation","objectif8");
-		formation8.setUser(employee6);
-		formationRep.save(formation8);
-		//formationCtr.AjouterFormation(formation8, employee6.getId_User());
-	
-		
-				
 		//Ajouter des Contact 
 		Contact contact1 = new Contact(1,"Contenu de Message 1",new Date(),"Ben Khaled Amal","amalBenKhaled@gmail.com");
 		contactRep.save(contact1);
