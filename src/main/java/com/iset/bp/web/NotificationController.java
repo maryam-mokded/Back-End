@@ -64,13 +64,9 @@ public class NotificationController {
 		int jourF = date.getDate() + 07;
 		int mois = date.getMonth();
 		int annee = date.getYear();
-		DateFormat mediumDateFormat = DateFormat.getDateTimeInstance( DateFormat.MEDIUM, DateFormat.MEDIUM);
-		String msg = "Monsieur / Madame ...  " + user.getNom()+" "+ user.getPrenom()+
-				" Nous devons vous informer de la date de dépôt des demandes de formation pour "
-			  + "vos salariés qui s'étend de ce jour "+  jourD + " / " + mois   +"  jusqu'à la semaine "
-			  + "prochaine correspondant au " + jourF + " / " + mois + "   Veuillez remplir une liste des"
-			  + " détails de formation nécessaires pour le personnel selon vos besoins et me "
-			  + "l'envoyer avant la date d'échéance ( " +  jourF + " / " + mois +" ) " ;
+		String msg = user.getNom()+" "+ user.getPrenom()+ "Afin d'établir le plan de formation priére "
+			  + "nous exprimer vos besoins en formation pour l'année  " + annee + 
+				" et ce au plus tard le  "+ jourF + " / " + mois ;
 		Notification notification = new Notification();
 		notification.setDate(new Date());
 		notification.setMessage(msg);
