@@ -19,8 +19,6 @@ import com.iset.bp.entities.Admin;
 import com.iset.bp.entities.Chef_Service_Formation;
 import com.iset.bp.entities.Contact;
 import com.iset.bp.entities.Direction;
-import com.iset.bp.entities.Employee;
-import com.iset.bp.entities.Formation;
 import com.iset.bp.entities.Pilote;
 import com.iset.bp.entities.Role;
 import com.iset.bp.entities.User;
@@ -61,7 +59,7 @@ public class BackEndApplication implements CommandLineRunner{
 		// TODO Auto-generated method stub
 		
 		//Ajouter Les Directions 
-		Direction direction1 = new Direction(1,"Maintenance");
+/*		Direction direction1 = new Direction(1,"Maintenance");
 		direcctionCtr.AjouterDirection(direction1);
         Direction direction2 = new Direction(2,"Production");
 		direcctionCtr.AjouterDirection(direction2);
@@ -201,7 +199,7 @@ public class BackEndApplication implements CommandLineRunner{
 		contactRep.save(contact3);
 		Contact contact4 = new Contact(4,"Contenu de Message 4",new Date(),"Thamlaoui Achref","AchrefThamlaoui@gmail.com");
 		contactRep.save(contact4);
-
+*/
 	}
 
 }
